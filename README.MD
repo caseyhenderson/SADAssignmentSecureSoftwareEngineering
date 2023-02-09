@@ -1,3 +1,10 @@
+# FORKED FOR SECURE SOFTWARE ENGINEERING BY CASEY HENDERSON
+
+I have forked my group assignment from SAD for the purposes of the Secure Software Engineering module. I will add extra security features to this project as part of this. The original README is below.
+
+
+# ORIGINAL
+
 # Sheffield Hallam SAD Assignment : Attendance System
 
 ## Repository Link:
