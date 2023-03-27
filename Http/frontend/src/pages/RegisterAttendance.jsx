@@ -7,10 +7,12 @@ import { useState } from "react";
 export default function RegisterAttendance() {
   const [code, setCode] = useState("");
   const [submitColourButton, setSubmitColourButton] = useState("primary");
-
+  
+  // stripHTML goes here?
+  // then some form of validation - i.e. restrict to being in the format we'd expect
   const handleCodeChange = (event) => {
     setSubmitColourButton("primary");
-    setCode(event.target.value);
+    setCode(stripHtml(event.target.value));
   };
 
   const onSubmit = async () => {
