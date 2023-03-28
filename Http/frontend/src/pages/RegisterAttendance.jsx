@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import sanitizeHtml from 'sanitize-html';
 import { Button, Grid, TextField, FormControl } from "@mui/material";
 import { fetchToken } from "../store";
 
@@ -7,12 +8,13 @@ import { useState } from "react";
 export default function RegisterAttendance() {
   const [code, setCode] = useState("");
   const [submitColourButton, setSubmitColourButton] = useState("primary");
-  
+
   // stripHTML goes here?
   // then some form of validation - i.e. restrict to being in the format we'd expect
   const handleCodeChange = (event) => {
     setSubmitColourButton("primary");
-    setCode(stripHtml(event.target.value));
+    setCode(event.target.value);
+    console.log(sanitizeHtml(event.target.value));
   };
 
   const onSubmit = async () => {
