@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux'
 import { Typography } from '@mui/material';
+import dayjs from 'dayjs';
+import log from 'loglevel';
+
 
 async function userLogin(credentials) {
   // Makes login request (POST) with supplied credentials.
@@ -33,7 +36,6 @@ export default function LoginForm()
   const [error, setError] = useState();
 
   const dispatch = useDispatch();
-
   // This function awaits userLogin and takes it from there.
   const handleSubmit = async e => {
     e.preventDefault();
@@ -47,10 +49,12 @@ export default function LoginForm()
     if(response.Success === true){
       const userDetails = await getUserDetails(response.Response.token);
       if(userDetails.Success === true){
+        log.setLevel('info');
+        log.info("Login successful at "+ dayjs().format()+ " from " + username);
         dispatch({type: "login", payload: {tokenDetails: response.Response, userDetails: userDetails.Response}});
       } else{
         // Error handling
-        console.log("Invalid username / password, please check your details and try again.");
+        log.error("Invalid username / password, please check your details and try again.");
         setError("Invalid username / password, please check your details and try again.")
       }
       

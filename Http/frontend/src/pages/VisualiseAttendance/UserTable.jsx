@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import dayjs from 'dayjs';
+import log from 'loglevel';
 
 import { fetchToken } from "../../store";
 
@@ -20,6 +22,7 @@ export default function UserTable() {
   // const pagesAvailable = useSelector((state) => state.pagesAvailable);
   const rowsPerPage = useSelector((state) => state.rowsPerPage);
   const totalRecords = useSelector((state) => state.totalRecords);
+  log.info("Attendance for all users viewed at "+dayjs().format());
 
   useEffect(() => {
     var url = new URL(`${window.location.origin}/api/users/resource`);

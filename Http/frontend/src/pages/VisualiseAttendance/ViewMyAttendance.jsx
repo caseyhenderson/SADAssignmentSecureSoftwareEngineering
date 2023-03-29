@@ -12,6 +12,7 @@ import {
 import { fetchToken } from "../../store";
 import { useLocation } from "react-router-dom";
 import dayjs from 'dayjs';
+import log from 'loglevel';
 
 import { useState } from "react"
 
@@ -23,6 +24,7 @@ export default function ViewMyAttendance() {
     // const pagesAvailable = useSelector((state) => state.pagesAvailable);
     const [rowsPerPage, setRowsPerPage] = useState(25);
     const [totalRecords, setTotalRecords] = useState(0);
+    log.info("The current user viewed their attendance at "+dayjs().format());
 
     useEffect(() => {
         var url = new URL(`${window.location.origin}/api/sessions/GetMySessions`);

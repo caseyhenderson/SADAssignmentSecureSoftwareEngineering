@@ -1,6 +1,8 @@
 import { Button } from '@mui/material'
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
+import dayjs from 'dayjs';
+import log from 'loglevel';
 
 // Simple Logout component. Removes token and clears redux store.
 export default function Logout() {
@@ -9,6 +11,9 @@ export default function Logout() {
         // 👇️ toggle shown state
           localStorage.removeItem('token');
           dispatch({type: "logout", payload: {} });
+          log.info("Logout at "+dayjs().format());
+
+          
     };
     return(
         <div>

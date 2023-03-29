@@ -1,5 +1,9 @@
 import { Grid } from "@mui/material";
+import dayjs from 'dayjs';
+import log from 'loglevel';
+
 export default function Unauthorised() {
+    log.warn("Unauthorised page displayed at"+ dayjs().format());
     return (
       <div>
         <Grid

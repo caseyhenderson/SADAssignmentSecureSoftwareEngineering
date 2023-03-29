@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { fetchToken } from "../../store";
 import { Form, Field, Formik } from "formik";
 import dayjs from 'dayjs';
+import log from 'loglevel';
 import { TextField, Stack } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopTimePicker } from '@mui/x-date-pickers';
+import useLogout from "../../components/autoLogout"
 
 export default function GenerateCode() {
   const [code, setCode] = useState("");
@@ -14,6 +16,7 @@ export default function GenerateCode() {
   const [cohortsList, setCohortsList] = useState([]);
   const [startTime, setStartTime] = useState(dayjs());
   const [endTime, setEndTime] = useState(dayjs());
+  useLogout();
 
   useEffect(() => {
     fetch(`${window.location.origin}/api/modules/resource`,
@@ -66,9 +69,11 @@ export default function GenerateCode() {
       );
       var generatedCode = await newActiveSessionRequest.json();
       if (generatedCode.Success) {
+        log.info("Code when generated is: " + generatedCode.Response.code+" . Code was successfully generated at "+ dayjs().format());
         return generatedCode.Response.code;
       }
     } else {
+      log.error("Failed to obtain code at"+dayjs().format());
       return "Failed to get code";
     }
   };

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { fetchToken } from "../store";
 import { useSelector } from "react-redux";
+import dayjs from 'dayjs';
+import log from 'loglevel';
 import {
   Button,
   FormControl,
@@ -8,6 +10,7 @@ import {
   TextField,
 } from "@mui/material";
 import Unauthorised from "../pages/Unauthorised"
+import useLogout from "../components/autoLogout"
 
 export default function EditAttendance() {
   const [form_course, setCourse] = useState(null);
@@ -58,9 +61,11 @@ export default function EditAttendance() {
 
     setCourseList(courses);
   };
+  useLogout();
 
   useEffect(() => {
     if(roles.includes(adminRoles)){
+      log.info("An admin user has accessed the attendance data at "+dayjs().format());
       getAllCourses();
     }
     
@@ -91,6 +96,7 @@ export default function EditAttendance() {
 
       var requestBody = await request.json();
       if (requestBody.Success) {
+        log.info("Sessions data accessed at "+dayjs().format());
         sessions = sessions.concat(requestBody.Response.sessions);
         hasNextPage = requestBody.Response.hasNextPage;
       }
@@ -114,9 +120,10 @@ export default function EditAttendance() {
 
     var body = await request.json();
     if (!body.Success) {
+      log.error("Attendance data was not submitted! This occurred at"+dayjs().format());
       return false;
     }
-
+    log.info("Attendance data was submitted successfully at"+dayjs().format());
     return true;
 
   }
@@ -195,6 +202,7 @@ export default function EditAttendance() {
     } else {
       var res = await submitAttendanceData();
       if (res) {
+        log.info("Attendance data was changed at "+dayjs().format());
         setSubmitColourButton("success");
       } else {
         setSubmitColourButton("error");

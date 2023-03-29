@@ -1,25 +1,30 @@
 import { useEffect } from "react";
-import sanitizeHtml from 'sanitize-html';
+import * as DOMPurify from 'dompurify';
 import { Button, Grid, TextField, FormControl } from "@mui/material";
 import { fetchToken } from "../store";
+import dayjs from 'dayjs';
+import log from 'loglevel';
+import useLogout from "../components/autoLogout"
 
 import { useState } from "react";
 
 export default function RegisterAttendance() {
   const [code, setCode] = useState("");
   const [submitColourButton, setSubmitColourButton] = useState("primary");
+  useLogout();
 
   // stripHTML goes here?
   // then some form of validation - i.e. restrict to being in the format we'd expect
   const handleCodeChange = (event) => {
     setSubmitColourButton("primary");
     setCode(event.target.value);
-    console.log(sanitizeHtml(event.target.value));
+    log.info("DOM Purify has sanitised the input to "+DOMPurify.sanitize(event.target.value)+" at "+dayjs().format());
   };
 
   const onSubmit = async () => {
     if (code === "") {
       setSubmitColourButton("error");
+      log.error("Error generating code at "+ dayjs().format()+" . The code cannot be empty.");
       alert("The code cannot be empty");
     } else {
       var url = new URL(`${window.location.origin}/api/activeSessions/RecordStudentAttendance/${code}`);
@@ -36,12 +41,15 @@ export default function RegisterAttendance() {
     
           if(!body.Success){
             setSubmitColourButton("error");
+            log.error("Error recording attendance at "+ dayjs().format());
             alert(`Failed to record attendance: ${body.Error}`);
           } else{
+            log.info("Attendance successfully recorded at "+ dayjs().format()+". The code used was "+code);
             setSubmitColourButton("success");
           }
       } catch(err) {
         setSubmitColourButton("error");
+        log.error("Error recording attendance at "+ dayjs().format());
         alert(`Failed to record attendance`);
       }
      

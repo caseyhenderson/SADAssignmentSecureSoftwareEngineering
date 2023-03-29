@@ -12,6 +12,7 @@ import {
 import { fetchToken } from "../../store";
 import { useLocation } from "react-router-dom";
 import dayjs from 'dayjs';
+import log from 'loglevel';
 
 import {useState} from "react"
 
@@ -22,7 +23,7 @@ export default function ViewAttendance () {
   const sessions = useSelector((state) => state.sessions);
   const dispatch = useDispatch();
   const currentUser = data.state.row.fullname;
-   
+  log.info("Individual attendance data was viewed for "+currentUser.firstname+" " +currentUser.lastname+" at "+dayjs().format());
   const [currentPage, setCurrentPage] = useState(0);
   // const pagesAvailable = useSelector((state) => state.pagesAvailable);
   const [rowsPerPage, setRowsPerPage] = useState(25);
