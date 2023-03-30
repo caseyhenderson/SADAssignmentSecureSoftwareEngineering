@@ -11,13 +11,13 @@ import { useState } from "react";
 export default function RegisterAttendance() {
   const [code, setCode] = useState("");
   const [submitColourButton, setSubmitColourButton] = useState("primary");
+  // autoLogout hook
   useLogout();
 
-  // stripHTML goes here?
-  // then some form of validation - i.e. restrict to being in the format we'd expect
+  // code is sanitised here using DOMPurify
   const handleCodeChange = (event) => {
     setSubmitColourButton("primary");
-    setCode(event.target.value);
+    setCode(DOMPurify.sanitize(event.target.value));
     log.info("DOM Purify has sanitised the input to "+DOMPurify.sanitize(event.target.value)+" at "+dayjs().format());
   };
 
