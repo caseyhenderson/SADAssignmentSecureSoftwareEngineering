@@ -4,10 +4,6 @@ import log from 'loglevel';
 import dayjs from 'dayjs';
 
 // custom react hook to auto logout after 2 minutes of inactivity
-// may need some slight changes for hook-i-ness
-// still to be tested properly. 
-// add logout function
-// if it doesn't work as a hook just drop it into a page
 
 export default function useLogout() {
     const autoLogoutTimerRef = useRef(null);

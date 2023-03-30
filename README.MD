@@ -7,8 +7,7 @@ The three security features are:
 Automatic logout after 2 minutes of activity - following OWASP recommendations for high-value applications.
 Input sanitisation, filtering and validation to guard against XSS attacks.
 Audit logging to track any and all alterations to attendance data, preserving a consistent record.
-
-
+Please run npm install if the node_modules folder is not present in the frontend directory.
 # ORIGINAL
 
 # Sheffield Hallam SAD Assignment : Attendance System
